@@ -9,11 +9,10 @@ import com.bumptech.glide.Glide
 import com.yuriysurzhikov.lab3.R
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.list.AbstractRecyclerAdapter
-import com.yuriysurzhikov.lab3.ui.list.OnItemClickListener
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ContactsRecyclerAdapter :
-    AbstractRecyclerAdapter<DataContact, ContactsRecyclerAdapter.ContactHolder>() {
+class ContactsRecyclerHolder :
+    AbstractRecyclerAdapter<DataContact, ContactsRecyclerHolder.ContactHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         return ContactHolder(

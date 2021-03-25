@@ -31,7 +31,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_til"
+        android:id="@+id/name_til"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:startIconTint="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/email_et"
+            android:id="@+id/name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
@@ -55,7 +55,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/subject_til"
+        android:id="@+id/email_til"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -65,21 +65,21 @@
         android:hint="@string/e_mail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_til"
+        app:layout_constraintTop_toBottomOf="@+id/name_til"
         app:startIconDrawable="@drawable/ic_email"
         app:startIconTint="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/subject_et"
+            android:id="@+id/email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="textEmailSubject|textAutoComplete|textMultiLine" />
+            android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/message_til"
+        android:id="@+id/phone_til"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,16 +89,16 @@
         android:hint="@string/phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subject_til"
+        app:layout_constraintTop_toBottomOf="@+id/email_til"
         app:startIconDrawable="@drawable/ic_phone"
         app:startIconTint="@color/purple_500">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/message_et"
+            android:id="@+id/phone_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="textEmailSubject|textAutoComplete|textMultiLine" />
+            android:inputType="phone" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
