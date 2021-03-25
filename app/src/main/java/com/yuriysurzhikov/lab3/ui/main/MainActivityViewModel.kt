@@ -17,6 +17,10 @@ class MainActivityViewModel : ViewModel() {
 
     val isEmpty = ObservableBoolean()
 
+    init {
+        isEmpty.set(mContactsList.isEmpty())
+    }
+
     fun observeContacts(owner: LifecycleOwner, observer: Observer<List<DataContact>>) {
         mContactsObservable.observe(owner, observer)
     }

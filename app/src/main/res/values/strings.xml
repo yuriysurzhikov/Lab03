@@ -16,4 +16,5 @@
     <string name="error_activity_no_found">No activity found for this action!</string>
     <string name="error_something_went_wrong">Error! Something went wrong…</string>
     <string name="item_was_removed">Item was removed</string>
+    <string name="warning_empty_data_list">Ohh, your data list is empty!</string>
 </resources>
