@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.yuriysurzhikov.lab3.R
+import com.yuriysurzhikov.lab3.databinding.ActivityMainBinding
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity.Companion.CONTACT_ENTITY
@@ -24,11 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var addButton: FloatingActionButton
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        binding.viewModel = viewModel
 
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
