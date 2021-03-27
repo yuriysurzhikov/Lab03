@@ -17,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.yuriysurzhikov.lab3.BuildConfig
 import com.yuriysurzhikov.lab3.R
 import com.yuriysurzhikov.lab3.model.DataContact
+import com.yuriysurzhikov.lab3.ui.text.LengthWatcher
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -38,8 +39,11 @@ class AddContactActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_contact)
         nameInput = findViewById(R.id.name_til)
+        nameInput.editText?.addTextChangedListener(LengthWatcher(nameInput))
         emailInput = findViewById(R.id.email_til)
+        emailInput.editText?.addTextChangedListener(LengthWatcher(emailInput))
         phoneInput = findViewById(R.id.phone_til)
+        phoneInput.editText?.addTextChangedListener(LengthWatcher(phoneInput))
         photoPicker = findViewById(R.id.circle_image)
 
         submitAction = findViewById(R.id.button_confirm)
