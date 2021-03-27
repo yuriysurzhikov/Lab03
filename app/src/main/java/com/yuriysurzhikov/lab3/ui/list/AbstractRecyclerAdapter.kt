@@ -17,6 +17,7 @@ abstract class AbstractRecyclerAdapter<T, VH : AbstractRecyclerAdapter.AbstractV
 
     override fun getItemCount() = mItems.size
 
+    @CallSuper
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.bind(mItems[position])
         holder.setOnClickListener(mOnItemClickListener)

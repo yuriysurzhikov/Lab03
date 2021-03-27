@@ -1,5 +1,7 @@
 package com.yuriysurzhikov.lab3.ui.main
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,24 +11,30 @@ import com.bumptech.glide.Glide
 import com.yuriysurzhikov.lab3.R
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.list.AbstractRecyclerAdapter
+import com.yuriysurzhikov.lab3.ui.swipe.ISwipeViewHolder
+import com.yuriysurzhikov.lab3.ui.swipe.OnDismissListener
 import de.hdodenhof.circleimageview.CircleImageView
 
-class ContactsRecyclerHolder :
-    AbstractRecyclerAdapter<DataContact, ContactsRecyclerHolder.ContactHolder>() {
+class ContactsRecyclerAdapter :
+    AbstractRecyclerAdapter<DataContact, ContactsRecyclerAdapter.ContactViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        return ContactHolder(
+    var onDismissListener: OnDismissListener<DataContact>? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
+        return ContactViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_contact, parent, false)
         )
     }
 
-    inner class ContactHolder(view: View) :
-        AbstractRecyclerAdapter.AbstractViewHolder<DataContact>(view) {
+    inner class ContactViewHolder(view: View) :
+        AbstractRecyclerAdapter.AbstractViewHolder<DataContact>(view),
+        ISwipeViewHolder {
 
         private val name: TextView? by lazy { itemView.findViewById<TextView>(R.id.name) }
         private val email: TextView? by lazy { itemView.findViewById<TextView>(R.id.email) }
         private val phone: TextView? by lazy { itemView.findViewById<TextView>(R.id.phone) }
         private val image: ImageView by lazy { itemView.findViewById<CircleImageView>(R.id.contact_image) }
+        private val foreground: View by lazy { itemView.findViewById<View>(R.id.foreground) }
 
         override fun bind(item: DataContact) {
             super.bind(item)
@@ -39,5 +47,14 @@ class ContactsRecyclerHolder :
                 .load(item.imageProfile)
                 .into(image)
         }
+
+        override fun onItemDismissed(position: Int) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                notifyItemRemoved(position)
+                onDismissListener?.onDismiss(getItem())
+            }, 1500)
+        }
+
+        override fun getForegroundView() = foreground
     }
 }

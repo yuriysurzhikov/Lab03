@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,10 +19,12 @@ import com.yuriysurzhikov.lab3.databinding.ActivityMainBinding
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity.Companion.CONTACT_ENTITY
+import com.yuriysurzhikov.lab3.ui.swipe.OnDismissListener
+import com.yuriysurzhikov.lab3.ui.swipe.SwipeCallback
 
 class MainActivity : AppCompatActivity() {
 
-    private val adapter = ContactsRecyclerHolder()
+    private val adapter = ContactsRecyclerAdapter()
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var addButton: FloatingActionButton
@@ -37,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
+        adapter.onDismissListener = removeListener
+        ItemTouchHelper(SwipeCallback()).attachToRecyclerView(recyclerView)
 
         addButton = findViewById(R.id.add_fab)
         addButton.setOnClickListener(addClickListener)
@@ -48,6 +53,15 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             CREATE_CONTACT_CODE -> processNewContactResult(resultCode, data)
+        }
+    }
+
+    private val removeListener = object :
+        OnDismissListener<DataContact> {
+        override fun onDismiss(item: DataContact?) {
+            item?.let {
+                viewModel.removeContact(item)
+            }
         }
     }
 
