@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +50,7 @@ class AddContactActivity : AppCompatActivity() {
 
         pickPhotoAction = findViewById(R.id.button_take_photo)
         pickPhotoAction.setOnClickListener(pickPhotoClickListener)
+        photoPicker.setOnClickListener(pickPhotoClickListener)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -66,13 +66,17 @@ class AddContactActivity : AppCompatActivity() {
                 val imageBitmap = data?.extras?.get("data") as Bitmap?
                 photoPicker.setImageBitmap(imageBitmap)
 
-                val outputFile = File.createTempFile("File_",".png")
+                val outputFile = File.createTempFile("File_", ".png")
                 var fileOutputStream: FileOutputStream? = null
                 try {
                     fileOutputStream = FileOutputStream(outputFile)
                     imageBitmap!!.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
                     imageUri = FileProvider
-                        .getUriForFile(this, "${BuildConfig.APPLICATION_ID}.fileprovider", outputFile)
+                        .getUriForFile(
+                            this,
+                            "${BuildConfig.APPLICATION_ID}.fileprovider",
+                            outputFile
+                        )
                 } catch (e: IOException) {
                     e.printStackTrace()
                 } finally {
@@ -134,7 +138,11 @@ class AddContactActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val CAPTURE_IMAGE_CODE = 100
         const val CONTACT_ENTITY = "AddContactActivity.ContactEntity"
+        private const val CAPTURE_IMAGE_CODE = 100
+        private const val OUT_NAME_INPUT = "name_input"
+        private const val OUT_PHONE_INPUT = "phone_input"
+        private const val OUT_EMAIL_INPUT = "email_input"
+        private const val OUT_IMAGE_URI = "image_uri"
     }
 }
