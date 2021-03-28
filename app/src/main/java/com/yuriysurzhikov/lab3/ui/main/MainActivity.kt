@@ -19,7 +19,7 @@ import com.yuriysurzhikov.lab3.databinding.ActivityMainBinding
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity.Companion.CONTACT_ENTITY
-import com.yuriysurzhikov.lab3.ui.swipe.OnDismissListener
+import com.yuriysurzhikov.lab3.ui.swipe.OnRemoveListener
 import com.yuriysurzhikov.lab3.ui.swipe.SwipeCallback
 
 class MainActivity : AppCompatActivity() {
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
-        adapter.onDismissListener = removeListener
+        adapter.onRemoveListener = removeListener
         ItemTouchHelper(SwipeCallback()).attachToRecyclerView(recyclerView)
 
         addButton = findViewById(R.id.add_fab)
@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val removeListener = object :
-        OnDismissListener<DataContact> {
-        override fun onDismiss(item: DataContact?) {
+        OnRemoveListener<DataContact> {
+        override fun onRemove(item: DataContact?) {
             item?.let {
                 viewModel.removeContact(item)
             }

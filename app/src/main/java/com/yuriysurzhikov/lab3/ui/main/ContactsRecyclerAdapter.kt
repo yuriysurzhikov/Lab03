@@ -12,13 +12,13 @@ import com.yuriysurzhikov.lab3.R
 import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.list.AbstractRecyclerAdapter
 import com.yuriysurzhikov.lab3.ui.swipe.ISwipeViewHolder
-import com.yuriysurzhikov.lab3.ui.swipe.OnDismissListener
+import com.yuriysurzhikov.lab3.ui.swipe.OnRemoveListener
 import de.hdodenhof.circleimageview.CircleImageView
 
 class ContactsRecyclerAdapter :
     AbstractRecyclerAdapter<DataContact, ContactsRecyclerAdapter.ContactViewHolder>() {
 
-    var onDismissListener: OnDismissListener<DataContact>? = null
+    var onRemoveListener: OnRemoveListener<DataContact>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         return ContactViewHolder(
@@ -50,8 +50,9 @@ class ContactsRecyclerAdapter :
 
         override fun onItemDismissed(position: Int) {
             Handler(Looper.getMainLooper()).postDelayed({
+                getForegroundView().translationX = 0f
                 notifyItemRemoved(position)
-                onDismissListener?.onDismiss(getItem())
+                onRemoveListener?.onRemove(getItem())
             }, 1500)
         }
 
