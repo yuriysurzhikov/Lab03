@@ -41,7 +41,7 @@ abstract class AbstractRecyclerAdapter<T, VH : AbstractRecyclerAdapter.AbstractV
         protected var mListener: OnItemClickListener<T>? = null
 
         @CallSuper
-        override fun bind(item: T) {
+        override fun bind(item: T?) {
             mItem = item
         }
 

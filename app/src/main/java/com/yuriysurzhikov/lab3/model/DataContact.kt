@@ -9,7 +9,7 @@ data class DataContact(
     var email: String?,
     var phone: String?,
     var imageProfile: Uri?
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString(),

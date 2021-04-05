@@ -19,14 +19,16 @@ import com.yuriysurzhikov.lab3.model.DataContact
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity
 import com.yuriysurzhikov.lab3.ui.addcontract.AddContactActivity.Companion.CONTACT_ENTITY
 import com.yuriysurzhikov.lab3.ui.list.OnItemClickListener
+import com.yuriysurzhikov.lab3.ui.list.groupedrecycler.ExampleGroupedAdapter
 
 class MainActivity : AppCompatActivity() {
 
-    private val adapter = ContactsRecyclerAdapter()
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var addButton: FloatingActionButton
     private lateinit var binding: ActivityMainBinding
+    private var canExpand: Boolean = true
+    private val adapter = ExampleGroupedAdapter(ArrayList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
-        adapter.removeListener = removeListener
 
         addButton = findViewById(R.id.add_fab)
         addButton.setOnClickListener(addClickListener)
@@ -75,12 +76,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val addClickListener = View.OnClickListener {
-        val intent = Intent(this, AddContactActivity::class.java)
-        startActivityForResult(intent, CREATE_CONTACT_CODE)
+        canExpand = !canExpand
     }
 
-    private val contactObserver = Observer<List<DataContact>> {
-        adapter.setItems(it)
+    private val contactObserver = Observer<ArrayList<ExampleGroupedAdapter.DataGroup>> {
+        it?.let {
+            recyclerView.adapter = ExampleGroupedAdapter(it)
+        }
     }
 
     companion object {

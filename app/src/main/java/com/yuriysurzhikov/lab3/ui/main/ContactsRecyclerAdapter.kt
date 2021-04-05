@@ -36,18 +36,18 @@ class ContactsRecyclerAdapter :
         private val image: ImageView by lazy { itemView.findViewById<CircleImageView>(R.id.contact_image) }
         private val removeButton: ImageView by lazy { itemView.findViewById<ImageView>(R.id.remove_action) }
 
-        override fun bind(item: DataContact) {
+        override fun bind(item: DataContact?) {
             super.bind(item)
 
-            name?.text = item.name
-            phone?.text = item.phone
-            email?.text = item.email
+            name?.text = item?.name
+            phone?.text = item?.phone
+            email?.text = item?.email
             removeButton.setOnClickListener {
-                removeListener.onItemClick(item, adapterPosition)
+                removeListener.onItemClick(item!!, adapterPosition)
             }
 
             Glide.with(image)
-                .load(item.imageProfile)
+                .load(item?.imageProfile)
                 .into(image)
         }
     }
